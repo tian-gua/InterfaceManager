@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"html/template"
+	"text/template"
 	"net/http"
 
 	"github.com/aidonggua/growing/grouter"
@@ -17,5 +17,11 @@ func (this *IndexController) Get(rw http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	t.Execute(rw, nil)
+
+	indexs := [5]string{"1", "1", "1", "1", "1"}
+	data := template.FuncMap{"Index":indexs}
+	err = t.Execute(rw, data)
+	if err != nil {
+		panic(err)
+	}
 }

@@ -159,11 +159,9 @@
                     class="caret"></span></button>
             <div class="module-div">
                 <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation"><a href="#">Home</a></li>
-                    <li role="presentation"><a href="#">Profile</a></li>
-                    <li role="presentation"><a href="#">Messages</a></li>
-                    <li role="presentation"><a href="#">Home</a></li>
-                    <li role="presentation"><a href="#">Profile</a></li>
+                    {{range .Index}}
+                    <li role="presentation"><a href="#">发送短信</a></li>
+                    {{end}}
                     <li role="presentation" style="text-align:center;">
                         <a href="#" data-toggle="modal"
                            data-target="#myModal">
@@ -181,7 +179,7 @@
 </div>
 
 <div class="layout-right">
-    <iframe style="width: 800px;height: 100%;" frameborder=0 src="info.html"></iframe>
+    <iframe style="width: 800px;height: 100%;" frameborder=0 src="/info"></iframe>
 </div>
 
 

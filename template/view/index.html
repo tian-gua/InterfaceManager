@@ -159,8 +159,8 @@
                     class="caret"></span></button>
             <div class="module-div">
                 <ul class="nav nav-pills nav-stacked">
-                    {{range .Index}}
-                    <li role="presentation"><a href="#">发送短信</a></li>
+                    {{range .modules}}
+                    <li role="presentation"><a href="#">{{.Name}}</a></li>
                     {{end}}
                     <li role="presentation" style="text-align:center;">
                         <a href="#" data-toggle="modal"
@@ -171,6 +171,22 @@
                 </ul>
             </div>
         </div>
+        {{range .modules}}
+        <div class="module">
+            <button type="button" class=" btn btn-primary btn-lg active module-button js-module-expland">{{.Name}} <span
+                    class="caret"></span></button>
+            <div class="module-div">
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation" style="text-align:center;">
+                        <a href="#" data-toggle="modal"
+                           data-target="#myModal">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增接口
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {{end}}
         <button type="button" class=" btn btn-primary btn-lg active module-button js-module-expland" data-toggle="modal"
                 data-target="#myModal">新增模块 <span
                 class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>

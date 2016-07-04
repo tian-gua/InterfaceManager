@@ -135,54 +135,54 @@
             $("#interfaces_description").val("")
         }
 
-        function getModuleInterfaces(e, id) {
-            var target = $(e);
-            var isHasClass = target.find(".caret").hasClass("rotate-up");
-            if (!isHasClass) {
-                $.ajax({
-                    url: "/interfaces/find",
-                    //返回的数据类型,text 或者 json数据，建议为json
-                    dataType: "json",
-                    //传参方式，get 或post
-                    type: "post",
-                    //传过去的参数集合，格式为 变量名：变量值
-                    data: {
-                        moduleId: id
-                    },
-                    //若Ajax处理失败后回调函数，msg是返回的错误信息
-                    error: function (msg) {
-                        alert("请求失败!");
-                    },
-                    //若Ajax处理成功后的回调函数，text是返回的页面信息
-                    success: function (data) {
-                        console.log(data)
-                        if (data.Code == 200) {
-                            var resp = data.Result;
-                            var html = '';
-                            if (resp) {
-                                for (var i = 0, menu; menu = resp[i++];) {
-//                                var menu = resp[i];
-                                    html += '<li role="presentation"><a href="#">' + menu.Name + '</a></li>';
-                                }
-                            }
-                            console.log(html)
-                            html += '<li role="presentation" style="text-align:center;"> <a href="#" data-toggle="modal" data-target="#addInterfacesDiv" onclick="getModuleId(\'{{.Id}}\')"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增接口 </a> </li>';
-                            target.next('.module-div').find('ul').html(html);
-
-                        } else {
-                            alert("获取接口列表错误!");
-                        }
-                    }
-                });
-            }
-        }
+        //        function getModuleInterfaces(e, id) {
+        //
+        //            getModuleId(id)
+        //
+        //            var target = $(e);
+        //            var isHasClass = target.find(".caret").hasClass("rotate-up");
+        //            if (!isHasClass) {
+        //                $.ajax({
+        //                    url: "/interfaces/find",
+        //                    //返回的数据类型,text 或者 json数据，建议为json
+        //                    dataType: "json",
+        //                    //传参方式，get 或post
+        //                    type: "post",
+        //                    //传过去的参数集合，格式为 变量名：变量值
+        //                    data: {
+        //                        moduleId: id
+        //                    },
+        //                    //若Ajax处理失败后回调函数，msg是返回的错误信息
+        //                    error: function (msg) {
+        //                        alert("请求失败!");
+        //                    },
+        //                    //若Ajax处理成功后的回调函数，text是返回的页面信息
+        //                    success: function (data) {
+        //                        console.log(data)
+        //                        if (data.Code == 200) {
+        //                            var resp = data.Result;
+        //                            var html = '';
+        //                            if (resp) {
+        //                                for (var i = 0, menu; menu = resp[i++];) {
+        ////                                var menu = resp[i];
+        //                                    html += '<li role="presentation"><a href="#">' + menu.Name + '</a></li>';
+        //                                }
+        //                            }
+        //                            console.log(html)
+        //                            html += '<li role="presentation" style="text-align:center;"> <a href="#" data-toggle="modal" data-target="#addInterfacesDiv"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增接口 </a> </li>';
+        //                            target.next('.module-div').find('ul').html(html);
+        //
+        //                        } else {
+        //                            alert("获取接口列表错误!");
+        //                        }
+        //                    }
+        //                });
+        //            }
+        //        }
 
     </script>
 </head>
 <body>
-
-
-<input type="hidden" name="moduleId"/>
 
 <div class="page-header">
     <h1>&nbsp;&nbsp;项目名
@@ -242,13 +242,18 @@
         <!--</div>-->
         {{range .modules}}
         <div class="module">
-            <button type="button" class="btn btn-primary btn-lg active module-button js-module-expland"
-                    onclick="getModuleInterfaces(this,'{{.Id}}')">{{.Name}} <span
+            <!--onclick="getModuleInterfaces(this,'{{.Id}}')"-->
+            <button type="button" class="btn btn-primary btn-lg active module-button js-module-expland">{{.Name}} <span
                     class="caret"></span></button>
             <div class="module-div">
                 <ul class="nav nav-pills nav-stacked">
-
-
+                    {{range .GetInterfaces}}
+                    <li role="presentation"><a href="#">{{.Name}}</a></li>
+                    {{end}}
+                    <li role="presentation" style="text-align:center;" onclick="getModuleId('{{.Id}}')"><a href="#"
+                                                                                                           data-toggle="modal"
+                                                                                                           data-target="#addInterfacesDiv"> <span
+                            class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增接口 </a></li>
                 </ul>
             </div>
         </div>
@@ -283,17 +288,13 @@
                 <div class="modal-body">
                     <input type="hidden" name="projectId" value="1">
                     <input id="moduleName" type="text" name="moduleName" class="form-control" placeholder="模块名"/></br>
-                    <!--<select class="form-control">-->
-                    <!--<option>PUT</option>-->
-                    <!--<option>POST</option>-->
-                    <!--</select>-->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
                             data-dismiss="modal">关闭
                     </button>
                     <a type="submit" class="btn btn-primary" onclick="addModule()">
-                        提交更改
+                        提交
                     </a>
                 </div>
             </form>
@@ -318,14 +319,14 @@
             </div>
             <form id="add_interfaces_form" action="/interfaces/add" method="post">
                 <div class="modal-body">
-                    <input id="module_id" type="hidden" name="">
-                    <input id="interfaces_name" type="text" name="moduleName" class="form-control"
+                    <input id="module_id" type="hidden" name="moduleId">
+                    <input id="interfaces_name" type="text" name="name" class="form-control"
                            placeholder="接口名"/></br>
-                    <input id="interfaces_description" type="text" name="Description" class="form-control"
+                    <input id="interfaces_description" type="text" name="description" class="form-control"
                            placeholder="接口描述"/></br>
-                    <select class="form-control">
-                        <option>PUT</option>
-                        <option>POST</option>
+                    <select class="form-control" name="method">
+                        <option value="1">PUT</option>
+                        <option value="2">POST</option>
                     </select>
                 </div>
                 <div class="modal-footer">
@@ -333,7 +334,7 @@
                             data-dismiss="modal">关闭
                     </button>
                     <a type="submit" class="btn btn-primary" onclick="addInterfaces()">
-                        提交更改
+                        提交
                     </a>
                 </div>
             </form>

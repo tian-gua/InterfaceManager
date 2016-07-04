@@ -18,6 +18,7 @@ func index(rw http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		panic(err)
 	}
+
 	data := template.FuncMap{"modules": modules}
 	err = t.Execute(rw, data)
 	if err != nil {

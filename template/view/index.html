@@ -6,7 +6,8 @@
 
     <title>矮冬瓜</title>
     <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="../static/jquery/jquery.min.js"></script>
+    <script src="../static/jquery/jquery.form.js"></script>
     <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
     <style type="text/css">
@@ -106,14 +107,82 @@
                     target.addClass(cName);
                     $(this).next(".module-div").css({"display": "block"})
                 }
-            })
+            });
+
+            $(".js-module-expland").click(function () {
+                $("#moduleName").val("")
+            });
 
         })
 
+        function addModule() {
+            $("#add_module_form").ajaxSubmit(function (resultJson) {
+                //回调操作
+                location.reload()
+            });
+        }
+
+        function addInterfaces() {
+            $("#add_interfaces_form").ajaxSubmit(function (resultJson) {
+                //回调操作
+                location.reload()
+            });
+        }
+
+        function getModuleId(id) {
+            $("#module_id").val(id);
+            $("#interfaces_name").val("")
+            $("#interfaces_description").val("")
+        }
+
+        function getModuleInterfaces(e, id) {
+            var target = $(e);
+            var isHasClass = target.find(".caret").hasClass("rotate-up");
+            if (!isHasClass) {
+                $.ajax({
+                    url: "/interfaces/find",
+                    //返回的数据类型,text 或者 json数据，建议为json
+                    dataType: "json",
+                    //传参方式，get 或post
+                    type: "post",
+                    //传过去的参数集合，格式为 变量名：变量值
+                    data: {
+                        moduleId: id
+                    },
+                    //若Ajax处理失败后回调函数，msg是返回的错误信息
+                    error: function (msg) {
+                        alert("请求失败!");
+                    },
+                    //若Ajax处理成功后的回调函数，text是返回的页面信息
+                    success: function (data) {
+                        console.log(data)
+                        if (data.Code == 200) {
+                            var resp = data.Result;
+                            var html = '';
+                            if (resp) {
+                                for (var i = 0, menu; menu = resp[i++];) {
+//                                var menu = resp[i];
+                                    html += '<li role="presentation"><a href="#">' + menu.Name + '</a></li>';
+                                }
+                            }
+                            console.log(html)
+                            html += '<li role="presentation" style="text-align:center;"> <a href="#" data-toggle="modal" data-target="#addInterfacesDiv" onclick="getModuleId(\'{{.Id}}\')"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增接口 </a> </li>';
+                            target.next('.module-div').find('ul').html(html);
+
+                        } else {
+                            alert("获取接口列表错误!");
+                        }
+                    }
+                });
+            }
+        }
 
     </script>
 </head>
 <body>
+
+
+<input type="hidden" name="moduleId"/>
 
 <div class="page-header">
     <h1>&nbsp;&nbsp;项目名
@@ -131,58 +200,55 @@
 <div class="layout-left">
     <div class="navi-div">
 
-        <div class="module">
+        <!--<div class="module">-->
 
-            <button type="button" class="btn btn-primary btn-lg active module-button js-module-expland">
-                登录模块 <span
-                    class="caret"></span>
-            </button>
-            <div class="module-div">
-                <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation"><a href="#">登录</a></li>
-                    <li role="presentation"><a href="#">退出登录</a></li>
-                    <li role="presentation"><a href="#">注册</a></li>
-                    <li role="presentation"><a href="#">第三方的登录</a></li>
-                    <li role="presentation"><a href="#">发送短信</a></li>
-                    <li role="presentation"><a href="#">短信验证</a></li>
-                    <li role="presentation" style="text-align:center;">
-                        <a href="#" data-toggle="modal"
-                           data-target="#myModal">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增接口
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="module">
-            <button type="button" class=" btn btn-primary btn-lg active module-button js-module-expland">日志模块 <span
-                    class="caret"></span></button>
-            <div class="module-div">
-                <ul class="nav nav-pills nav-stacked">
-                    {{range .modules}}
-                    <li role="presentation"><a href="#">{{.Name}}</a></li>
-                    {{end}}
-                    <li role="presentation" style="text-align:center;">
-                        <a href="#" data-toggle="modal"
-                           data-target="#myModal">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增接口
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <!--<button type="button" class="btn btn-primary btn-lg active module-button js-module-expland">-->
+        <!--登录模块 <span-->
+        <!--class="caret"></span>-->
+        <!--</button>-->
+        <!--<div class="module-div">-->
+        <!--<ul class="nav nav-pills nav-stacked">-->
+        <!--<li role="presentation"><a href="#">登录</a></li>-->
+        <!--<li role="presentation"><a href="#">退出登录</a></li>-->
+        <!--<li role="presentation"><a href="#">注册</a></li>-->
+        <!--<li role="presentation"><a href="#">第三方的登录</a></li>-->
+        <!--<li role="presentation"><a href="#">发送短信</a></li>-->
+        <!--<li role="presentation"><a href="#">短信验证</a></li>-->
+        <!--<li role="presentation" style="text-align:center;">-->
+        <!--<a href="#" data-toggle="modal"-->
+        <!--data-target="#myModal">-->
+        <!--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增接口-->
+        <!--</a>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="module">-->
+        <!--<button type="button" class=" btn btn-primary btn-lg active module-button js-module-expland">日志模块 <span-->
+        <!--class="caret"></span></button>-->
+        <!--<div class="module-div">-->
+        <!--<ul class="nav nav-pills nav-stacked">-->
+        <!--{{range .modules}}-->
+        <!--<li role="presentation"><a href="#">{{.Name}}</a></li>-->
+        <!--{{end}}-->
+        <!--<li role="presentation" style="text-align:center;">-->
+        <!--<a href="#" data-toggle="modal"-->
+        <!--data-target="#myModal">-->
+        <!--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增接口-->
+        <!--</a>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <!--</div>-->
         {{range .modules}}
         <div class="module">
-            <button type="button" class=" btn btn-primary btn-lg active module-button js-module-expland">{{.Name}} <span
+            <button type="button" class="btn btn-primary btn-lg active module-button js-module-expland"
+                    onclick="getModuleInterfaces(this,'{{.Id}}')">{{.Name}} <span
                     class="caret"></span></button>
             <div class="module-div">
                 <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation" style="text-align:center;">
-                        <a href="#" data-toggle="modal"
-                           data-target="#myModal">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增接口
-                        </a>
-                    </li>
+
+
                 </ul>
             </div>
         </div>
@@ -213,23 +279,64 @@
                     添加模块
                 </h4>
             </div>
-            <div class="modal-body">
-                <form action="/module/add" method="post">
-                    <input type="text" class="form-control" placeholder="模块名"/></br>
+            <form id="add_module_form" action="/module/add" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="projectId" value="1">
+                    <input id="moduleName" type="text" name="moduleName" class="form-control" placeholder="模块名"/></br>
                     <!--<select class="form-control">-->
-                        <!--<option>PUT</option>-->
-                        <!--<option>POST</option>-->
+                    <!--<option>PUT</option>-->
+                    <!--<option>POST</option>-->
                     <!--</select>-->
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <a type="submit" class="btn btn-primary" onclick="addModule()">
+                        提交更改
+                    </a>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="addInterfacesDiv" tabindex="-1" role="dialog"
+     aria-labelledby="modalLabel2" aria-hidden="true" style="position: absolute">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
                 </button>
-                <button type="button" class="btn btn-primary">
-                    提交更改
-                </button>
+                <h4 class="modal-title" id="modalLabel2">
+                    添加接口
+                </h4>
             </div>
+            <form id="add_interfaces_form" action="/interfaces/add" method="post">
+                <div class="modal-body">
+                    <input id="module_id" type="hidden" name="">
+                    <input id="interfaces_name" type="text" name="moduleName" class="form-control"
+                           placeholder="接口名"/></br>
+                    <input id="interfaces_description" type="text" name="Description" class="form-control"
+                           placeholder="接口描述"/></br>
+                    <select class="form-control">
+                        <option>PUT</option>
+                        <option>POST</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <a type="submit" class="btn btn-primary" onclick="addInterfaces()">
+                        提交更改
+                    </a>
+                </div>
+            </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>

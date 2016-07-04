@@ -5,7 +5,8 @@ import (
 	. "index/service"
 	"html/template"
 	"github.com/aidonggua/growing/grouter"
-	"fmt"
+	"common"
+	"strconv"
 )
 
 func index(rw http.ResponseWriter, req *http.Request) {
@@ -24,11 +25,23 @@ func index(rw http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func addModule(rw http.ResponseWriter, req *http.Request) {
-	fmt.Println("添加模块!")
+func add(rw http.ResponseWriter, req *http.Request) {
+	moduleName := req.PostFormValue("moduleName")
+	projectId := req.PostFormValue("projectId")
+	pid, err := strconv.Atoi(projectId)
+	if err != nil {
+		panic(err)
+	}
+	err = AddModule(moduleName, pid)
+	if err != nil {
+		rw.Write(common.GetCustomStatus("添加模块错误", 1001, nil).GetJson())
+	} else {
+		rw.Write(common.GetSuccessStatus().SetMsg("添加成功").GetJson())
+	}
 }
 
 func init() {
 	grouter.Route("/index", index)
-	grouter.Route("/addModule", addModule)
+	grouter.Route("/module/add", add)
+
 }

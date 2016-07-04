@@ -13,3 +13,9 @@ func FindAllModule(projectId int) ([]Module, error) {
 	return *modules, err
 
 }
+
+//添加模块
+func AddModule(moduleName string, projectId int) error {
+	module := &Module{Name:moduleName, ProjectId:projectId, }
+	return gorm.Save(module)
+}

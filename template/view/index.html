@@ -188,7 +188,7 @@
         </div>
         {{end}}
         <button type="button" class=" btn btn-primary btn-lg active module-button js-module-expland" data-toggle="modal"
-                data-target="#myModal">新增模块 <span
+                data-target="#addModuleDiv">新增模块 <span
                 class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
 
     </div>
@@ -200,8 +200,8 @@
 
 
 <!-- 模态框（Modal） -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true" style="position: absolute">
+<div class="modal fade" id="addModuleDiv" tabindex="-1" role="dialog"
+     aria-labelledby="modalLabel" aria-hidden="true" style="position: absolute">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -209,17 +209,18 @@
                         data-dismiss="modal" aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="modal-title" id="myModalLabel">
-                    添加接口
+                <h4 class="modal-title" id="modalLabel">
+                    添加模块
                 </h4>
             </div>
             <div class="modal-body">
-                <input type="text" class="form-control" placeholder="接口说明"/></br>
-                <input type="text" class="form-control" placeholder="请求地址"/></br>
-                <select class="form-control">
-                    <option>PUT</option>
-                    <option>POST</option>
-                </select>
+                <form action="/module/add" method="post">
+                    <input type="text" class="form-control" placeholder="模块名"/></br>
+                    <!--<select class="form-control">-->
+                        <!--<option>PUT</option>-->
+                        <!--<option>POST</option>-->
+                    <!--</select>-->
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"

@@ -2,13 +2,13 @@ package service
 
 import (
 	"github.com/aidonggua/growing/gorm"
-	"entity"
+	. "index/entity"
 )
 
 //获得所有模块
-func FindAllModule(projectId int) ([]entity.Module, error) {
+func FindAllModule(projectId int) ([]Module, error) {
 
-	modules := new([]entity.Module)
+	modules := new([]Module)
 	err := gorm.QueryAll(modules)
 	return *modules, err
 

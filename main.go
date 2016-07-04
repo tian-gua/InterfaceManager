@@ -1,11 +1,11 @@
 package main
 
 import (
-	"controller"
+	_ "index/controller"
+	_ "info/controller"
 
 	"github.com/aidonggua/growing/gorm"
 	"github.com/aidonggua/growing/gorm/generate"
-	"github.com/aidonggua/growing/grouter"
 	"github.com/aidonggua/growing/grow"
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -16,9 +16,7 @@ func main() {
 
 func start() {
 	gorm.InitDB("mysql", "root:root@tcp(127.0.0.1:3306)/my")
-	grouter.Route("/index", &controller.IndexController{})
-	grouter.Route("/info", &controller.InfoController{})
-	grow.Start(8080)
+	grow.Start(8888)
 }
 
 func generateCode() {

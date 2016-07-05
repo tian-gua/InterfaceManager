@@ -24,17 +24,17 @@
     <dt>
     <h4>接口描述:</h4></dt>
     <dd>
-        <li>这是一个接口</li>
+        <li>{{.Description}}</li>
     </dd>
     <dt>
     <h4>请求地址:</h4></dt>
     <dd>
-        <li>http://www.baidu.com</li>
+        <li>{{.Url}}</li>
     </dd>
     <dt>
     <h4>方法类型:</h4></dt>
     <dd>
-        <li>POST</li>
+        <li>{{.Method}}</li>
     </dd>
     <h4>参数:</h4></dt>
     <dd>
@@ -83,7 +83,7 @@
             <tr>
                 <td>1</td>
                 <td>status</td>
-                <td>String   </td>
+                <td>String</td>
                 <td>返回状态，成功返回success，失败返回fail</td>
             </tr>
             <tr>

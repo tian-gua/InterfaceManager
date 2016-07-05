@@ -1,8 +1,9 @@
 package service
 
 import (
-	"github.com/aidonggua/growing/gorm"
 	. "info/entity"
+
+	"github.com/aidonggua/growing/gorm"
 )
 
 func FindInterfaces(moduleId int) ([]Interfaces, error) {
@@ -13,4 +14,10 @@ func FindInterfaces(moduleId int) ([]Interfaces, error) {
 
 func AddInterfaces(interf *Interfaces) error {
 	return gorm.Save(interf)
+}
+
+func FindInterfaceById(interfaceId int) ([]Interfaces, error) {
+	ints := new([]Interfaces)
+	err := gorm.Query(&Interfaces{Id: interfaceId}, ints)
+	return *ints, err
 }

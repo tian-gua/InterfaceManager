@@ -180,6 +180,10 @@
         //            }
         //        }
 
+        function openInfo(url) {
+            $("#info_frame").attr("src", url);
+        }
+
     </script>
 </head>
 <body>
@@ -248,7 +252,7 @@
             <div class="module-div">
                 <ul class="nav nav-pills nav-stacked">
                     {{range .GetInterfaces}}
-                    <li role="presentation"><a href="#">{{.Name}}</a></li>
+                    <li role="presentation"><a href="#" onclick="openInfo('/info?id={{.Id}}')">{{.Name}}</a></li>
                     {{end}}
                     <li role="presentation" style="text-align:center;" onclick="getModuleId('{{.Id}}')"><a href="#"
                                                                                                            data-toggle="modal"
@@ -266,7 +270,7 @@
 </div>
 
 <div class="layout-right">
-    <iframe style="width: 800px;height: 100%;" frameborder=0 src="/info"></iframe>
+    <iframe id="info_frame" style="width: 800px;height: 100%;" frameborder=0></iframe>
 </div>
 
 
@@ -324,6 +328,8 @@
                            placeholder="接口名"/></br>
                     <input id="interfaces_description" type="text" name="description" class="form-control"
                            placeholder="接口描述"/></br>
+                    <input id="interfaces_url" type="text" name="url" class="form-control"
+                           placeholder="接口地址"/></br>
                     <select class="form-control" name="method">
                         <option value="1">PUT</option>
                         <option value="2">POST</option>

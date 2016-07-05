@@ -1,13 +1,14 @@
 package controller
 
 import (
-	"html/template"
-	"net/http"
-	"github.com/aidonggua/growing/grouter"
-	. "info/service"
-	. "info/entity"
-	"strconv"
 	"common"
+	"html/template"
+	. "info/entity"
+	. "info/service"
+	"net/http"
+	"strconv"
+
+	"github.com/aidonggua/growing/grouter"
 )
 
 func info(rw http.ResponseWriter, req *http.Request) {
@@ -15,8 +16,15 @@ func info(rw http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-
-	t.Execute(rw, nil)
+	id, err := strconv.Atoi(req.FormValue("id"))
+	if err != nil {
+		panic(err)
+	}
+	interf, err := FindInterfaceById(id)
+	if err != nil {
+		panic(err)
+	}
+	t.Execute(rw, interf[0])
 }
 
 func add(rw http.ResponseWriter, req *http.Request) {
@@ -26,11 +34,12 @@ func add(rw http.ResponseWriter, req *http.Request) {
 	}
 	name := req.FormValue("name")
 	description := req.FormValue("description")
+	url := req.FormValue("url")
 	method, err := strconv.Atoi(req.FormValue("method"))
 	if err != nil {
 		panic(err)
 	}
-	int := &Interfaces{Name:name, ModuleId:moduleId, Description:description, Method:method}
+	int := &Interfaces{Name: name, ModuleId: moduleId, Description: description, Method: method, Url:url}
 	err = AddInterfaces(int)
 	if err != nil {
 		rw.Write(common.GetCustomStatus("添加接口错误!", 1003, nil).GetJson())

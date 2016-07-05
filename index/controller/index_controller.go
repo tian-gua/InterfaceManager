@@ -12,7 +12,7 @@ import (
 func index(rw http.ResponseWriter, req *http.Request) {
 	t, err := template.ParseFiles("./template/view/index.html")
 	if err != nil {
-		//panic(err)
+		panic(err)
 	}
 	modules, err := FindAllModule(0)
 	if err != nil {

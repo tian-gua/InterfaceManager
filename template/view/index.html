@@ -252,7 +252,7 @@
             <div class="module-div">
                 <ul class="nav nav-pills nav-stacked">
                     {{range .GetInterfaces}}
-                    <li role="presentation"><a href="#" onclick="openInfo('/info?id={{.Id}}')">{{.Name}}</a></li>
+                    <li role="presentation"><a href="#" onclick="openInfo('/info?Id={{.Id}}')">{{.Name}}</a></li>
                     {{end}}
                     <li role="presentation" style="text-align:center;" onclick="getModuleId('{{.Id}}')"><a href="#"
                                                                                                            data-toggle="modal"
@@ -290,8 +290,8 @@
             </div>
             <form id="add_module_form" action="/module/add" method="post">
                 <div class="modal-body">
-                    <input type="hidden" name="projectId" value="1">
-                    <input id="moduleName" type="text" name="moduleName" class="form-control" placeholder="模块名"/></br>
+                    <input type="hidden" name="ProjectId" value="1">
+                    <input id="moduleName" type="text" name="ModuleName" class="form-control" placeholder="模块名"/></br>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
@@ -323,14 +323,14 @@
             </div>
             <form id="add_interfaces_form" action="/interfaces/add" method="post">
                 <div class="modal-body">
-                    <input id="module_id" type="hidden" name="moduleId">
-                    <input id="interfaces_name" type="text" name="name" class="form-control"
+                    <input id="module_id" type="hidden" name="ModuleId">
+                    <input id="interfaces_name" type="text" name="Name" class="form-control"
                            placeholder="接口名"/></br>
-                    <input id="interfaces_description" type="text" name="description" class="form-control"
+                    <input id="interfaces_description" type="text" name="Description" class="form-control"
                            placeholder="接口描述"/></br>
-                    <input id="interfaces_url" type="text" name="url" class="form-control"
+                    <input id="interfaces_url" type="text" name="Url" class="form-control"
                            placeholder="接口地址"/></br>
-                    <select class="form-control" name="method">
+                    <select class="form-control" name="Method">
                         <option value="1">PUT</option>
                         <option value="2">POST</option>
                     </select>

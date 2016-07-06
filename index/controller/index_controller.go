@@ -6,7 +6,6 @@ import (
 	"html/template"
 	"github.com/aidonggua/growing/grouter"
 	"common"
-	"strconv"
 )
 
 func index(rw http.ResponseWriter, req *http.Request) {
@@ -26,14 +25,13 @@ func index(rw http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func add(rw http.ResponseWriter, req *http.Request) {
-	moduleName := req.PostFormValue("moduleName")
-	projectId := req.PostFormValue("projectId")
-	pid, err := strconv.Atoi(projectId)
-	if err != nil {
-		panic(err)
-	}
-	err = AddModule(moduleName, pid)
+type addParam struct {
+	ModuleName string
+	ProjectId  int
+}
+
+func add(rw http.ResponseWriter, req *http.Request, param addParam) {
+	err := AddModule(param.ModuleName, param.ProjectId)
 	if err != nil {
 		rw.Write(common.GetCustomStatus("添加模块错误", 1001, nil).GetJson())
 	} else {

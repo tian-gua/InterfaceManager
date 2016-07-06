@@ -7,4 +7,5 @@ type Interfaces struct {
 	Url         string
 	ModuleId    int
 	Method      int
+	Example     string
 }

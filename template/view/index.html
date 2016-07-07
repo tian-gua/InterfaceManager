@@ -204,46 +204,6 @@
 <div class="layout-left">
     <div class="navi-div">
 
-        <!--<div class="module">-->
-
-        <!--<button type="button" class="btn btn-primary btn-lg active module-button js-module-expland">-->
-        <!--登录模块 <span-->
-        <!--class="caret"></span>-->
-        <!--</button>-->
-        <!--<div class="module-div">-->
-        <!--<ul class="nav nav-pills nav-stacked">-->
-        <!--<li role="presentation"><a href="#">登录</a></li>-->
-        <!--<li role="presentation"><a href="#">退出登录</a></li>-->
-        <!--<li role="presentation"><a href="#">注册</a></li>-->
-        <!--<li role="presentation"><a href="#">第三方的登录</a></li>-->
-        <!--<li role="presentation"><a href="#">发送短信</a></li>-->
-        <!--<li role="presentation"><a href="#">短信验证</a></li>-->
-        <!--<li role="presentation" style="text-align:center;">-->
-        <!--<a href="#" data-toggle="modal"-->
-        <!--data-target="#myModal">-->
-        <!--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增接口-->
-        <!--</a>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div class="module">-->
-        <!--<button type="button" class=" btn btn-primary btn-lg active module-button js-module-expland">日志模块 <span-->
-        <!--class="caret"></span></button>-->
-        <!--<div class="module-div">-->
-        <!--<ul class="nav nav-pills nav-stacked">-->
-        <!--{{range .modules}}-->
-        <!--<li role="presentation"><a href="#">{{.Name}}</a></li>-->
-        <!--{{end}}-->
-        <!--<li role="presentation" style="text-align:center;">-->
-        <!--<a href="#" data-toggle="modal"-->
-        <!--data-target="#myModal">-->
-        <!--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增接口-->
-        <!--</a>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</div>-->
         {{range .modules}}
         <div class="module">
             <!--onclick="getModuleInterfaces(this,'{{.Id}}')"-->
@@ -329,11 +289,17 @@
                     <input id="interfaces_description" type="text" name="Description" class="form-control"
                            placeholder="接口描述"/></br>
                     <input id="interfaces_url" type="text" name="Url" class="form-control"
-                           placeholder="接口地址"/></br>
+                           placeholder="接口地址"/>
+                    </br>
                     <select class="form-control" name="Method">
                         <option value="1">PUT</option>
                         <option value="2">POST</option>
                     </select>
+                    </br>
+                    <textarea class="form-control" rows="3" name="Param"
+                              placeholder="参数格式:【类型 变量名,】【类型 变量名1 变量名2...,】"></textarea>
+                    </br>
+                    <textarea class="form-control" rows="3" name="Example" placeholder="返回示例"></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"

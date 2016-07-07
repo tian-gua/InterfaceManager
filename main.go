@@ -12,6 +12,7 @@ import (
 
 func main() {
 	start()
+	//	generateCode()
 }
 
 func start() {
@@ -23,5 +24,6 @@ func generateCode() {
 	generate.SetDBInfo("mysql", "root:root@tcp(127.0.0.1:3306)/my")
 	generate.Generate("interfaces")
 	generate.Generate("module")
+	generate.Generate("params")
 
 }

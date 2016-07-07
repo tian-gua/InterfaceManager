@@ -24,7 +24,7 @@ func info(rw http.ResponseWriter, req *http.Request, param infoParam) {
 	if err != nil {
 		panic(err)
 	}
-	t.Execute(rw, interf[0])
+	t.Execute(rw, &interf[0])
 }
 
 type addParam struct {
@@ -33,12 +33,13 @@ type addParam struct {
 	Description string
 	Url         string
 	Method      int
+	Param       string
 }
 
 func add(rw http.ResponseWriter, req *http.Request, param addParam) {
 
-	int := &Interfaces{Name: param.Name, ModuleId: param.ModuleId, Description: param.Description, Method: param.Method, Url:param.Url}
-	err := AddInterfaces(int)
+	int := &Interfaces{Name: param.Name, ModuleId: param.ModuleId, Description: param.Description, Method: param.Method, Url: param.Url}
+	err := AddInterfaces(int, param.Param)
 	if err != nil {
 		rw.Write(common.GetCustomStatus("添加接口错误!", 1003, nil).GetJson())
 	} else {

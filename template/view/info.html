@@ -47,7 +47,6 @@
 </head>
 <body class="info-body">
 
-
 <dl>
     <dt>
     <h4>接口描述:</h4></dt>
@@ -62,7 +61,7 @@
     <dt>
     <h4>方法类型:</h4></dt>
     <dd>
-        <li>{{.Method}}</li>
+        <li>{{.MethodString}}</li>
     </dd>
     <h4>参数:</h4></dt>
     <dd>
@@ -131,7 +130,6 @@
 <pre id="result">
 {{.Example}}
 </pre>
-
 
 <script type="text/javascript">
     $('#result').html(syntaxHighlight($('#result').text().trim()));

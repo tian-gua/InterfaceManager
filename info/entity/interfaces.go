@@ -1,5 +1,6 @@
 package entity
 
+
 type Interfaces struct {
 	Id          int
 	Name        string
@@ -8,4 +9,11 @@ type Interfaces struct {
 	ModuleId    int
 	Method      int
 	Example     string
+}
+
+func (this *Interfaces) MethodString() string {
+	if this.Method == 1 {
+		return "Put"
+	}
+	return "Post"
 }

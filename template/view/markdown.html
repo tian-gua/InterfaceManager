@@ -86,15 +86,20 @@
             path: "../static/markdown/lib/"
         });
 
-        myEditormd.getPreviewedHTML()
+        myEditormd.getPreviewedHTML();
     });
 
     function saveHtml() {
-        $("#html").val(myEditormd.getMarkdown())
+        $("#html").val(myEditormd.getMarkdown());
         $("#int_form").ajaxSubmit(function (resultJson) {
-            alert(JSON.parse(resultJson).Code)
             //回调操作
-            location.href="/index"
+            resultObj = JSON.parse(resultJson);
+            if (resultObj.Code == 200) {
+                location.href = "/index";
+            } else {
+                alert(resultObj.Msg);
+            }
+
         });
     }
 </script>

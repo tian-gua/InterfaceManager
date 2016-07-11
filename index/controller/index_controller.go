@@ -30,6 +30,10 @@ type addParam struct {
 }
 
 func add(rw http.ResponseWriter, req *http.Request, param addParam) {
+	if len(param.ModuleName) == 0 || param.ProjectId == 0 {
+		rw.Write(common.GetCustomStatus("参数不正确!", 4000, nil).GetJson())
+		return
+	}
 	err := AddModule(param.ModuleName, param.ProjectId)
 	if err != nil {
 		rw.Write(common.GetCustomStatus("添加模块错误", 1001, nil).GetJson())

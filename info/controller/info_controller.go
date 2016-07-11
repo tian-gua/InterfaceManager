@@ -36,7 +36,10 @@ func markdown(rw http.ResponseWriter, req *http.Request, param infoParam) {
 }
 
 func add(rw http.ResponseWriter, req *http.Request, intelf Interfaces) {
-
+	if len(intelf.Name) == 0 || intelf.ModuleId == 0 || len(intelf.Html) == 0 {
+		rw.Write(common.GetCustomStatus("参数不正确!", 4000, nil).GetJson())
+		return
+	}
 	int := &Interfaces{Name: intelf.Name, ModuleId: intelf.ModuleId, Html:intelf.Html}
 	err := AddInterfaces(int)
 	if err != nil {

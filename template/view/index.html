@@ -88,14 +88,12 @@
         function addModule() {
             $("#add_module_form").ajaxSubmit(function (resultJson) {
                 //回调操作
-                location.reload()
-            });
-        }
-
-        function addInterfaces() {
-            $("#add_interfaces_form").ajaxSubmit(function (resultJson) {
-                //回调操作
-                location.reload()
+                resultObj = JSON.parse(resultJson);
+                if (resultObj.Code == 200) {
+                    location.href = "/index";
+                } else {
+                    alert(resultObj.Msg);
+                }
             });
         }
 

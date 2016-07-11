@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"common"
+	"github.com/aidonggua/InterfaceManager/common"
 	"html/template"
 	. "github.com/aidonggua/InterfaceManager/info/entity"
 	. "github.com/aidonggua/InterfaceManager/info/service"

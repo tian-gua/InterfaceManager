@@ -5,7 +5,7 @@ import (
 	. "github.com/aidonggua/InterfaceManager/index/service"
 	"html/template"
 	"github.com/aidonggua/growing/grouter"
-	"common"
+	"github.com/aidonggua/InterfaceManager/common"
 )
 
 func index(rw http.ResponseWriter, req *http.Request) {

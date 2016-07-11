@@ -1,7 +1,7 @@
 package entity
 
-import . "info/entity"
-import "info/service"
+import . "github.com/aidonggua/InterfaceManager/info/entity"
+import "github.com/aidonggua/InterfaceManager/info/service"
 
 type Module struct {
 	Id        int

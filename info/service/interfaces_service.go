@@ -1,7 +1,7 @@
 package service
 
 import (
-	. "info/entity"
+	. "github.com/aidonggua/InterfaceManager/info/entity"
 	"github.com/aidonggua/growing/gorm"
 	"strconv"
 )

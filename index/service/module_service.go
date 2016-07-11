@@ -2,7 +2,7 @@ package service
 
 import (
 	"github.com/aidonggua/growing/gorm"
-	. "index/entity"
+	. "github.com/aidonggua/InterfaceManager/index/entity"
 )
 
 //获得所有模块

@@ -2,7 +2,7 @@ package controller
 
 import (
 	"net/http"
-	. "index/service"
+	. "github.com/aidonggua/InterfaceManager/index/service"
 	"html/template"
 	"github.com/aidonggua/growing/grouter"
 	"common"

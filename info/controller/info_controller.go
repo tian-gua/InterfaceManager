@@ -3,8 +3,8 @@ package controller
 import (
 	"common"
 	"html/template"
-	. "info/entity"
-	. "info/service"
+	. "github.com/aidonggua/InterfaceManager/info/entity"
+	. "github.com/aidonggua/InterfaceManager/info/service"
 	"net/http"
 	"strconv"
 

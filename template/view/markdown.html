@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8"/>
+    <title>接口文档管理系统</title>
+    <link rel="stylesheet" href="../static/markdown/css/editormd.min.css"/>
+    <link rel="stylesheet" href="../static/markdown/css/editormd.logo.min.css"/>
+    <link rel="stylesheet" href="../static/markdown/css/style.css"/>
+    <link rel="stylesheet" href="../static/markdown/css/editormd.preview.min.css"/>
+    <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon"/>
+</head>
+<body>
+<div id="layout">
+    <header>
+        <h1>编辑接口</h1>
+    </header>
+    <div class="btns">
+        <form id="int_form" action="/interfaces/add" style="float: left;margin-right: 5px;">
+            <input id="moduleName" type="text" style="border-radius: 3px;border: 1px solid #ddd;padding: 8px 10px;"
+                   name="Name" placeholder="模块名"/>
+            <input id="html" name="Html" type="hidden"/>
+            <input name="ModuleId" value="{{.}}" type="hidden"/>
+        </form>
+        <button id="watch-btn" onclick="saveHtml()">保存接口</button>
+    </div>
+    <div id="myEditormd">
+                <textarea style="display:none;">
+
+### 描述：
+>  **`描述一下这个接口`**
+
+------------
+
+###请求地址：
+>  **`Http://localhost:8080/login`**
+
+------------
+
+###请求类型：
+> **`Put`**
+
+------------
+
+###请求参数
+> | 参数名  | 参数类型  | 说明 | 是否必选 |
+| ------------ | ------------ | ------------ | ------------ |
+|	userName	|	String	|	用户名	|	是	|
+|	password	|	String	|	密码	|	是	|
+|	mobile	|	String	|	手机号	|	否	|
+
+------------
+
+###返回值
+> | 参数名  | 参数类型  | 说明 | 是否必选 |
+| ------------ | ------------ | ------------ | ------------ |
+|	code	|	String	|	返回码	|	是	|
+|	msg	|	String	|	接口信息	|	是	|
+|	result	|	String	|	结果集	|	否	|
+
+
+------------
+
+###返回实例
+```json
+  {
+    "statu": "success",
+    "code": "000",
+	"result": null
+  }
+```
+
+</textarea>
+    </div>
+</div>
+
+<script src="../static/jquery/jquery.min.js"></script>
+<script src="../static/markdown/editormd.js"></script>
+<script src="../static/jquery/jquery.form.js"></script>
+<script type="text/javascript">
+    var myEditormd;
+
+    $(function () {
+        myEditormd = editormd("myEditormd", {
+            width: "90%",
+            syncScrolling: "single",
+            path: "../static/markdown/lib/"
+        });
+
+        myEditormd.getPreviewedHTML()
+    });
+
+    function saveHtml() {
+        $("#html").val(myEditormd.getMarkdown())
+        $("#int_form").ajaxSubmit(function (resultJson) {
+            alert(JSON.parse(resultJson).Code)
+            //回调操作
+            location.href="/index"
+        });
+    }
+</script>
+</body>
+</html>

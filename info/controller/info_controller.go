@@ -16,7 +16,7 @@ type infoParam struct {
 }
 
 func info(rw http.ResponseWriter, req *http.Request, param infoParam) {
-	t, err := template.ParseFiles("./template/view/info.html")
+	t, err := template.ParseFiles("./template/view/interfaces.html")
 	if err != nil {
 		panic(err)
 	}
@@ -24,22 +24,21 @@ func info(rw http.ResponseWriter, req *http.Request, param infoParam) {
 	if err != nil {
 		panic(err)
 	}
-	t.Execute(rw, &interf[0])
+	t.Execute(rw, interf)
 }
 
-type addParam struct {
-	ModuleId    int
-	Name        string
-	Description string
-	Url         string
-	Method      int
-	Param       string
+func markdown(rw http.ResponseWriter, req *http.Request, param infoParam) {
+	t, err := template.ParseFiles("./template/view/markdown.html")
+	if err != nil {
+		panic(err)
+	}
+	t.Execute(rw, param.Id)
 }
 
-func add(rw http.ResponseWriter, req *http.Request, param addParam) {
+func add(rw http.ResponseWriter, req *http.Request, intelf Interfaces) {
 
-	int := &Interfaces{Name: param.Name, ModuleId: param.ModuleId, Description: param.Description, Method: param.Method, Url: param.Url}
-	err := AddInterfaces(int, param.Param)
+	int := &Interfaces{Name: intelf.Name, ModuleId: intelf.ModuleId, Html:intelf.Html}
+	err := AddInterfaces(int)
 	if err != nil {
 		rw.Write(common.GetCustomStatus("添加接口错误!", 1003, nil).GetJson())
 	} else {
@@ -64,4 +63,5 @@ func init() {
 	grouter.Route("/info", info)
 	grouter.Route("/interfaces/find", findInterfaces)
 	grouter.Route("/interfaces/add", add)
+	grouter.Route("/markdown", markdown)
 }

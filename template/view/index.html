@@ -107,6 +107,12 @@
             $("#info_frame").attr("src", url);
         }
 
+        /**
+         * 修改接口信息
+         */
+        function modifyItfc(id) {
+            window.location = "/markdown?Type=1&Id=" + id;
+        }
     </script>
 </head>
 <body style="">
@@ -120,7 +126,7 @@
     <div class="layout-left">
         <div class="navi-div">
 
-            {{range .modules}}
+            {{range $.modules}}
             <div class="module">
                 <!--onclick="getModuleInterfaces(this,'{{.Id}}')"-->
                 <button type="button" class="btn btn-primary btn-lg active module-button js-module-expland">
@@ -129,10 +135,12 @@
                 <div class="module-div">
                     <ul class="nav nav-pills nav-stacked">
                         {{range .GetInterfaces}}
-                        <li role="presentation"><a href="#" onclick="openInfo('/info?Id={{.Id}}')">{{.Name}}</a></li>
+                        <li role="presentation"><a href="#" onclick="openInfo('/info?Id={{.Id}}')">{{.Name}}<span
+                                class="glyphicon glyphicon-pencil" style="float: right;" aria-hidden="true"
+                                onclick="modifyItfc('{{.Id}}')"></span></a></li>
                         {{end}}
                         <li role="presentation" style="text-align:center;" onclick="getModuleId('{{.Id}}')"><a
-                                href="/markdown?Id={{.Id}}"> <span
+                                href="/markdown?Type=0&Id={{.Id}}"> <span
                                 class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增接口 </a></li>
                     </ul>
                 </div>

@@ -9,6 +9,8 @@ type Module struct {
 	ProjectId int
 }
 
+//获得模块下的所有接口
+//在template里面调用
 func (m *Module) GetInterfaces() []Interfaces {
 	ints, err := service.FindInterfaces(m.Id)
 	if err != nil {

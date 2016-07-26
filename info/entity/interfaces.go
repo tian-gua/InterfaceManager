@@ -6,7 +6,3 @@ type Interfaces struct {
 	ModuleId int
 	Html     string
 }
-
-func (this *Interfaces) GetModuleName() {
-
-}

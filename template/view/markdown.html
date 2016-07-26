@@ -17,61 +17,15 @@
     <div class="btns">
         <form id="int_form" action="/interfaces/add" style="float: left;margin-right: 5px;">
             <input id="moduleName" type="text" style="border-radius: 3px;border: 1px solid #ddd;padding: 8px 10px;"
-                   name="Name" placeholder="模块名"/>
+                   name="Name" placeholder="模块名" value="{{.Name}}"/>
             <input id="html" name="Html" type="hidden"/>
-            <input name="ModuleId" value="{{.}}" type="hidden"/>
+            <input name="ModuleId" value="{{.ModuleId}}" type="hidden"/>
+            <input name="Id" value="{{.Id}}" type="hidden"/>
         </form>
         <button id="watch-btn" onclick="saveHtml()">保存接口</button>
     </div>
     <div id="myEditormd">
-                <textarea style="display:none;">
-
-
-### 描述：
-	描述一下这个接口
-
-------------
-
-###请求地址：
-	Http://localhost:8080/login
-
-------------
-
-###请求类型：
-	Get
-
-------------
-
-###请求参数
-| 参数名  | 参数类型  | 说明 | 是否必选 |
-| ------------ | ------------ | ------------ | ------------ |
-|	userName	|	String	|	用户名	|	是	|
-|	password	|	String	|	密码	|	是	|
-|	mobile	|	String	|	手机号	|	否	|
-
-------------
-
-###返回值
-| 参数名  | 参数类型  | 说明 | 是否必选 |
-| ------------ | ------------ | ------------ | ------------ |
-|	code	|	String	|	返回码	|	是	|
-|	msg	|	String	|	接口信息	|	是	|
-|	result	|	String	|	结果集	|	否	|
-
-
-------------
-
-###返回实例
-```json
-  {
-    "statu": "success",
-    "code": "000",
-	"result": null
-  }
-```
-
-
-</textarea>
+        <textarea style="display:none;">{{.Html}}</textarea>
     </div>
 </div>
 
@@ -92,7 +46,8 @@
     });
 
     function saveHtml() {
-        $("#html").val(myEditormd.getMarkdown());
+        //有时候md源码第一行解析容易出错,添加一个换行
+        $("#html").val("\n" + myEditormd.getMarkdown());
         $("#int_form").ajaxSubmit(function (resultJson) {
             //回调操作
             resultObj = JSON.parse(resultJson);
@@ -101,7 +56,6 @@
             } else {
                 alert(resultObj.Msg);
             }
-
         });
     }
 </script>

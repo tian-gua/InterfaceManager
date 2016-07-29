@@ -1,9 +1,7 @@
 package main
 
 import (
-	_ "github.com/aidonggua/InterfaceManager/index/controller"
-	_ "github.com/aidonggua/InterfaceManager/info/controller"
-
+	_ "controller"
 	"github.com/aidonggua/growing/gorm"
 	"github.com/aidonggua/growing/gorm/generate"
 	"github.com/aidonggua/growing/grow"
@@ -17,7 +15,7 @@ func main() {
 
 func start() {
 	gorm.InitDB("mysql", "root:root@tcp(127.0.0.1:3306)/my")
-	grow.Start(8888)
+	grow.Start(8080)
 }
 
 func generateCode() {
@@ -25,5 +23,4 @@ func generateCode() {
 	generate.Generate("interfaces")
 	generate.Generate("module")
 	generate.Generate("params")
-
 }

@@ -2,10 +2,10 @@ package controller
 
 import (
 	"net/http"
-	. "github.com/aidonggua/InterfaceManager/index/service"
 	"html/template"
+	"service"
+	"common"
 	"github.com/aidonggua/growing/grouter"
-	"github.com/aidonggua/InterfaceManager/common"
 )
 
 func index(rw http.ResponseWriter, req *http.Request) {
@@ -13,7 +13,7 @@ func index(rw http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	modules, err := FindAllModule(0)
+	modules, err := service.FindAllModule(0)
 	if err != nil {
 		panic(err)
 	}
@@ -29,12 +29,12 @@ type addParam struct {
 	ProjectId  int
 }
 
-func add(rw http.ResponseWriter, req *http.Request, param addParam) {
+func addModule(rw http.ResponseWriter, req *http.Request, param addParam) {
 	if len(param.ModuleName) == 0 || param.ProjectId == 0 {
 		rw.Write(common.GetCustomStatus("参数不正确!", 4000, nil).GetJson())
 		return
 	}
-	err := AddModule(param.ModuleName, param.ProjectId)
+	err := service.AddModule(param.ModuleName, param.ProjectId)
 	if err != nil {
 		rw.Write(common.GetCustomStatus("添加模块错误", 1001, nil).GetJson())
 	} else {
@@ -44,6 +44,6 @@ func add(rw http.ResponseWriter, req *http.Request, param addParam) {
 
 func init() {
 	grouter.Route("/index", index)
-	grouter.Route("/module/add", add)
+	grouter.Route("/module/add", addModule)
 
 }

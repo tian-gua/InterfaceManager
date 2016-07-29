@@ -1,12 +1,12 @@
 package controller
 
 import (
-	"html/template"
 	"net/http"
+	"html/template"
+	"service"
+	"common"
 	"strconv"
-	"github.com/aidonggua/InterfaceManager/common"
-	. "github.com/aidonggua/InterfaceManager/info/entity"
-	. "github.com/aidonggua/InterfaceManager/info/service"
+	. "domain"
 	"github.com/aidonggua/growing/grouter"
 	"github.com/aidonggua/growing/gorm"
 )
@@ -66,7 +66,7 @@ func info(rw http.ResponseWriter, req *http.Request, param infoParam) {
 	if err != nil {
 		panic(err)
 	}
-	interf, err := FindInterfaceById(param.Id)
+	interf, err := service.FindInterfaceById(param.Id)
 	if err != nil {
 		panic(err)
 	}
@@ -82,7 +82,7 @@ func markdown(rw http.ResponseWriter, req *http.Request, param infoParam) {
 	if param.Type == 0 {
 		itfc = &Interfaces{Id:0, ModuleId: param.Id, Html: md, Name:""}
 	} else {
-		itfc, err = FindInterfaceById(param.Id)
+		itfc, err = service.FindInterfaceById(param.Id)
 		if err != nil {
 			panic(err)
 		}
@@ -91,12 +91,12 @@ func markdown(rw http.ResponseWriter, req *http.Request, param infoParam) {
 }
 
 //保存接口
-func add(rw http.ResponseWriter, req *http.Request, intelf Interfaces) {
+func addInterfaces(rw http.ResponseWriter, req *http.Request, intelf Interfaces) {
 	if len(intelf.Name) == 0 || intelf.ModuleId == 0 || len(intelf.Html) == 0 {
 		rw.Write(common.GetCustomStatus("参数不正确!", 4000, nil).GetJson())
 		return
 	}
-	err := AddInterfaces(&intelf)
+	err := service.AddInterfaces(&intelf)
 	if err != nil {
 		if err == gorm.ZRC {
 			rw.Write(common.GetCustomStatus("没有做任何修改!", 200, nil).GetJson())
@@ -115,7 +115,7 @@ func findInterfaces(rw http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	ints, err := FindInterfaces(moduleId)
+	ints, err := service.FindInterfaces(moduleId)
 	if err != nil {
 		rw.Write(common.GetCustomStatus("获取接口错误!", 1002, nil).GetJson())
 	} else {
@@ -126,6 +126,6 @@ func findInterfaces(rw http.ResponseWriter, req *http.Request) {
 func init() {
 	grouter.Route("/info", info)
 	grouter.Route("/interfaces/find", findInterfaces)
-	grouter.Route("/interfaces/add", add)
+	grouter.Route("/interfaces/add", addInterfaces)
 	grouter.Route("/markdown", markdown)
 }

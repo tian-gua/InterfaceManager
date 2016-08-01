@@ -1,14 +1,15 @@
 package controller
 
 import (
-	"net/http"
 	"html/template"
-	"github.com/aidonggua/InterfaceManager/service"
-	"github.com/aidonggua/InterfaceManager/common"
+	"net/http"
 	"strconv"
+
+	"github.com/aidonggua/InterfaceManager/common"
 	. "github.com/aidonggua/InterfaceManager/domain"
-	"github.com/aidonggua/growing/grouter"
+	"github.com/aidonggua/InterfaceManager/service"
 	"github.com/aidonggua/growing/gorm"
+	"github.com/aidonggua/growing/grouter"
 )
 
 const md string = `
@@ -80,7 +81,7 @@ func markdown(rw http.ResponseWriter, req *http.Request, param infoParam) {
 	}
 	var itfc *Interfaces = nil
 	if param.Type == 0 {
-		itfc = &Interfaces{Id:0, ModuleId: param.Id, Html: md, Name:""}
+		itfc = &Interfaces{Id: 0, ModuleId: param.Id, Html: md, Name: ""}
 	} else {
 		itfc, err = service.FindInterfaceById(param.Id)
 		if err != nil {
@@ -101,6 +102,7 @@ func addInterfaces(rw http.ResponseWriter, req *http.Request, intelf Interfaces)
 		if err == gorm.ZRC {
 			rw.Write(common.GetCustomStatus("没有做任何修改!", 200, nil).GetJson())
 		} else {
+			panic(err)
 			rw.Write(common.GetCustomStatus("保存接口错误!", 1003, nil).GetJson())
 		}
 	} else {

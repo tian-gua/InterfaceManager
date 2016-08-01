@@ -3,10 +3,10 @@ package controller
 import (
 	"net/http"
 	"html/template"
-	"service"
-	"common"
+	"github.com/aidonggua/InterfaceManager/service"
+	"github.com/aidonggua/InterfaceManager/common"
 	"strconv"
-	. "domain"
+	. "github.com/aidonggua/InterfaceManager/domain"
 	"github.com/aidonggua/growing/grouter"
 	"github.com/aidonggua/growing/gorm"
 )

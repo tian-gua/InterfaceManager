@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "controller"
+	_ "github.com/aidonggua/InterfaceManager/controller"
 	"github.com/aidonggua/growing/gorm"
 	"github.com/aidonggua/growing/gorm/generate"
 	"github.com/aidonggua/growing/grow"

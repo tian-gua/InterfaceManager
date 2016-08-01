@@ -1,7 +1,7 @@
 package dao
 
 import (
-	. "domain"
+	. "github.com/aidonggua/InterfaceManager/domain"
 	"github.com/aidonggua/growing/gorm"
 	"strconv"
 )

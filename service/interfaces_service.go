@@ -1,8 +1,8 @@
 package service
 
 import (
-	. "domain"
-	"dao"
+	. "github.com/aidonggua/InterfaceManager/domain"
+	"github.com/aidonggua/InterfaceManager/dao"
 )
 
 //根据模块id查询模块

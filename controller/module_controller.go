@@ -3,8 +3,8 @@ package controller
 import (
 	"net/http"
 	"html/template"
-	"service"
-	"common"
+	"github.com/aidonggua/InterfaceManager/service"
+	"github.com/aidonggua/InterfaceManager/common"
 	"github.com/aidonggua/growing/grouter"
 )
 
